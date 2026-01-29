@@ -14,7 +14,23 @@ The class should have the following methods:
 - getFoodInfo(): string, returns a string in the following format: "<name> has <calories> calories"
 */
 /* Write your Task 1 solution here */
+class Food {
+  name: string;
+  calories: number;
 
+  constructor(name: string, calories: number) {
+    this.name = name;
+    this.calories = calories;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  getFoodInfo(): string {
+    return `${this.name} has ${this.calories} calories`
+  }
+}
 
 
 /* Task 2 - Create a class Refrigerator. The purpose of the class is to store Food objects. 
@@ -39,7 +55,38 @@ The class should have the following methods:
   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
 */
 /* Write your Task 2 solution here */
+class Refrigerator {
+    food: Food[];
 
+  constructor() {
+    this.food = [];
+  }
 
+  addFood(food: Food): void {
+    this.food.push(food);
+  }
 
+  getContents(): string[] {
+    return this.food.map(food => food.getName());
+  }
+
+  eatFood(foodName: string): string {
+    const foodIndex = this.food.findIndex(food => food.getName() === foodName);
+    if (foodIndex !== -1) {
+      const food = this.food[foodIndex];
+      this.food.splice(foodIndex, 1);
+      return `You ate ${food.getName()} with ${food.calories} calories`;
+    } else {
+      return `There is no ${foodName} in the refrigerator`;
+    }
+  }
+
+  getTotalCalories(): number {
+    return this.food.reduce((total, food) => total + food.calories, 0);
+  }
+
+  getNumberOfFoodItems(): number {
+    return this.food.length;
+  }
+}
 export { Food, Refrigerator };
